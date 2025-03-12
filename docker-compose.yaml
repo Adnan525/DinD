@@ -1,0 +1,21 @@
+services:
+  service-a:
+    build:
+      context: ./service_A
+      dockerfile: Dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - shared_vol:/app/shared
+    depends_on:
+      - service-b
+
+  service-b:
+    build:
+      context: ./service_B
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+
+volumes:
+  shared_vol:
+    external: true
